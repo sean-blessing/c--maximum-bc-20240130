@@ -11,22 +11,28 @@ namespace Exceptions {
             // Use Exception Handling to validate a date
             while (!success) { 
                 Console.WriteLine("Let's enter a date.");
-                int monthNbr = getInt("Enter Month Number (1 - 12): ", 1, 12);
-                //Console.WriteLine($"Month: " + DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(monthNbr));
-
-                int day = getInt("Enter Day Number (1 - 31): ", 1, 31);
-                //Console.WriteLine($"Day of Week: " + Enum.GetName(typeof(DayOfWeek), (dowNbr-1)));
-
                 int year = getInt("Enter Year: ");
 
+                int month = getInt("Enter Month Number (1 - 12): ", 1, 12);
+                //Console.WriteLine($"Month: " + DateTimeFormatInfo.CurrentInfo.GetAbbreviatedMonthName(monthNbr));
+
+                // first attempt - hardcoding 31 as max
+                //int day = getInt($"Enter Day Number (1 - 31): ", 1, 31);
+
+                // second attempt - dynamically set max based on year and month
+                int maxDayForMonthYear = DateTime.DaysInMonth(year, month);
+                int day = getInt($"Enter Day Number (1 - {maxDayForMonthYear}): ", 1, maxDayForMonthYear);
+                //Console.WriteLine($"Day of Week: " + Enum.GetName(typeof(DayOfWeek), (dowNbr-1)));
+
+
                 try {
-                    dateTime = new DateTime(year, monthNbr, day);
+                    dateTime = new DateTime(year, month, day);
                     Console.WriteLine($"Date is: {dateTime.ToShortDateString()}");
                     success = true;
                 }
                 catch (System.ArgumentOutOfRangeException saoore) {
                     Console.WriteLine(saoore.Message);
-                    Console.WriteLine($"Year ({year}) / Month ({monthNbr}) / Day ({day})");
+                    Console.WriteLine($"Year ({year}) / Month ({month}) / Day ({day})");
                     Console.WriteLine("Try again.");
                     success = false;
                 }
