@@ -15,7 +15,7 @@ namespace PrsWebNet.Models {
 		public string Unit { get; set; }
 		public string? PhotoPath { get; set; }
 
-        public Vendor Vendor { get; set; }
+        public Vendor? Vendor { get; set; }
 
     }
 

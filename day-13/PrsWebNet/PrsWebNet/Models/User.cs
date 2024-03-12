@@ -33,6 +33,8 @@ namespace PrsWebNet.Models {
 
         public Boolean Admin { get; set; } = false;
 
+        public List<Request>? Requests { get; set; }
+
         /*
          * 
         CREATE TABLE [User] (

@@ -37,7 +37,8 @@ namespace PrsWebNet.Models {
         [StringLength(100)]
         public string Email { get; set; }
 
-        //public List<Product> Products { get; set; }
+        //navigation property
+        public List<Product>? Products { get; set; }
     }
 
 }

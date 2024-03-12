@@ -33,10 +33,26 @@ namespace PrsWebNet.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            //var product = await _context.Product.FindAsync(id);
+            var product = await _context.Products.Include(p => p.Vendor).FirstOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
             {
+                return NotFound();
+            }
+
+            return product;
+        }
+
+        // GET: api/Products/vendorId/partNum
+        [HttpGet("get-product-by-vendor-part/{vendorId}/{partNum}")]
+        public async Task<ActionResult<Product>> GetProductByPartNum(int vendorId, string partNum) {
+            
+            var product = await _context.Products.Include(p => p.Vendor)
+                .FirstOrDefaultAsync(p => p.PartNumber == partNum
+                                      && p.VendorId == vendorId);
+
+            if (product == null) {
                 return NotFound();
             }
 
